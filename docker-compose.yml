@@ -23,3 +23,8 @@ services:
       - "27017:27017"
     volumes:
       - mongo_data:/data/db
+
+# Sección corregida: Esto le dice a Docker que cree y gestione el almacenamiento persistente
+volumes:
+  postgres_data:
+  mongo_data:
