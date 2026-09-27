@@ -1,0 +1,217 @@
+{
+    "schema_version":  1,
+    "diagram_type":  "architecture",
+    "meta":  {
+                 "title":  "Backend \u0026 Frontend Dev Environment",
+                 "quality_profile":  "showcase",
+                 "views":  [
+                               {
+                                   "id":  "flujo-app-api",
+                                   "label":  "Flutter a FastAPI",
+                                   "focus":  [
+                                                 "flutter",
+                                                 "api",
+                                                 "postgres",
+                                                 "mongo"
+                                             ],
+                                   "note":  "Consulta HTTP a /healthcheck y conexiones de persistencia probadas por la API."
+                               },
+                               {
+                                   "id":  "inicio-sesion",
+                                   "label":  "Inicio de sesion",
+                                   "focus":  [
+                                                 "flutter",
+                                                 "keycloak",
+                                                 "postgres"
+                                             ],
+                                   "note":  "Redireccion OIDC a Keycloak; FastAPI no muestra validacion del token."
+                               }
+                           ]
+             },
+    "components":  [
+                       {
+                           "id":  "flutter",
+                           "type":  "frontend",
+                           "label":  "Flutter mÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³vil / web",
+                           "sublabel":  "core / data / domain / presentation",
+                           "tag":  "app_movil/lib",
+                           "pos":  [
+                                       60,
+                                       250
+                                   ],
+                           "size":  [
+                                        250,
+                                        88
+                                    ]
+                       },
+                       {
+                           "id":  "env-config",
+                           "type":  "external",
+                           "label":  "ConfiguraciÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³n dev",
+                           "sublabel":  "app_movil/environments/.env.dev.json",
+                           "tag":  "localhost endpoints",
+                           "pos":  [
+                                       60,
+                                       90
+                                   ],
+                           "size":  [
+                                        190,
+                                        72
+                                    ]
+                       },
+                       {
+                           "id":  "api",
+                           "type":  "backend",
+                           "label":  "fastapi_api",
+                           "sublabel":  "FastAPI ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â· Python 3.11-slim ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â· :8000",
+                           "tag":  "GET /healthcheck",
+                           "pos":  [
+                                       380,
+                                       250
+                                   ],
+                           "size":  [
+                                        220,
+                                        88
+                                    ]
+                       },
+                       {
+                           "id":  "postgres",
+                           "type":  "database",
+                           "label":  "postgres_db",
+                           "sublabel":  "PostgreSQL 16 ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â· :5432",
+                           "tag":  "app_db",
+                           "pos":  [
+                                       760,
+                                       90
+                                   ],
+                           "size":  [
+                                        190,
+                                        80
+                                    ]
+                       },
+                       {
+                           "id":  "mongo",
+                           "type":  "database",
+                           "label":  "mongo_db",
+                           "sublabel":  "MongoDB 7 ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â· :27017",
+                           "tag":  "healthcheck: ping",
+                           "pos":  [
+                                       760,
+                                       360
+                                   ],
+                           "size":  [
+                                        190,
+                                        80
+                                    ]
+                       },
+                       {
+                           "id":  "keycloak",
+                           "type":  "security",
+                           "label":  "Keycloak",
+                           "sublabel":  "25.0 ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â· start-dev ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â· :8080",
+                           "tag":  "Realm app-movil ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â· flutter-app",
+                           "pos":  [
+                                       380,
+                                       485
+                                   ],
+                           "size":  [
+                                        220,
+                                        80
+                                    ]
+                       }
+                   ],
+    "connections":  [
+                        {
+                            "id":  "config-to-flutter",
+                            "from":  "env-config",
+                            "to":  "flutter",
+                            "label":  "carga del JSON no confirmada",
+                            "variant":  "dashed",
+                            "fromSide":  "bottom",
+                            "toSide":  "top",
+                            "labelDy":  24,
+                            "labelDx":  0
+                        },
+                        {
+                            "id":  "flutter-api",
+                            "from":  "flutter",
+                            "to":  "api",
+                            "label":  "HTTP GET /healthcheck",
+                            "variant":  "emphasis"
+                        },
+                        {
+                            "id":  "flutter-keycloak",
+                            "from":  "flutter",
+                            "to":  "keycloak",
+                            "label":  "OIDC auth redirect ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â· response_type=token ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â· scope=openid profile",
+                            "variant":  "security",
+                            "fromSide":  "bottom",
+                            "toSide":  "left"
+                        },
+                        {
+                            "id":  "api-postgres",
+                            "from":  "api",
+                            "to":  "postgres",
+                            "label":  "SQL SELECT 1",
+                            "fromSide":  "right",
+                            "toSide":  "left"
+                        },
+                        {
+                            "id":  "api-mongo",
+                            "from":  "api",
+                            "to":  "mongo",
+                            "label":  "admin ping",
+                            "fromSide":  "right",
+                            "toSide":  "left",
+                            "labelDy":  42
+                        },
+                        {
+                            "id":  "keycloak-postgres",
+                            "from":  "keycloak",
+                            "to":  "postgres",
+                            "label":  "JDBC PostgreSQL",
+                            "fromSide":  "right",
+                            "toSide":  "right",
+                            "via":  [
+                                        [
+                                            1080,
+                                            525
+                                        ],
+                                        [
+                                            1080,
+                                            130
+                                        ],
+                                        [
+                                            970,
+                                            130
+                                        ]
+                                    ]
+                        }
+                    ],
+    "cards":  [
+                  {
+                      "dot":  "cyan",
+                      "title":  "Flujo principal",
+                      "items":  [
+                                    "Flutter consulta GET /healthcheck en localhost:8000",
+                                    "FastAPI verifica PostgreSQL y MongoDB y devuelve el estado"
+                                ]
+                  },
+                  {
+                      "dot":  "violet",
+                      "title":  "AutenticaciÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³n",
+                      "items":  [
+                                    "Flutter redirige al endpoint OIDC de Keycloak y recupera access_token del fragmento URL",
+                                    "main.py no valida tokens ni aplica autenticaciÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³n a endpoints"
+                                ]
+                  },
+                  {
+                      "dot":  "emerald",
+                      "title":  "Persistencia",
+                      "items":  [
+                                    "API y Keycloak usan app_db en PostgreSQL mediante conexiones separadas",
+                                    "La API conecta a MongoDB para admin ping; no se confirma uso de colecciones"
+                                ]
+                  }
+              ]
+}

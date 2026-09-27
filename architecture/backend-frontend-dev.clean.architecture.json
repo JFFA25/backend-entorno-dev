@@ -1,0 +1,297 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Arquitectura Backend & Flutter",
+    "output": "backend-frontend-dev.html",
+    "quality_profile": "showcase",
+    "visual_preset": "blueprint",
+    "repository": {
+      "url": "https://github.com/JFFA25/backend-entorno-dev",
+      "provider": "github",
+      "revision": "d4d8029a769c793dc6da0c5480d6af69e3a8650c"
+    },
+    "views": [
+      {
+        "id": "request-path",
+        "label": "Flujo de API",
+        "focus": ["login-screen", "api-service", "fastapi", "postgres", "mongo"],
+        "note": "La pantalla consulta FastAPI, que verifica ambas bases de datos."
+      },
+      {
+        "id": "identity-path",
+        "label": "Inicio de sesion",
+        "focus": ["login-screen", "auth-service", "keycloak", "postgres"],
+        "note": "Keycloak devuelve el token al cliente; FastAPI no lo valida en el codigo revisado."
+      },
+      {
+        "id": "build-output",
+        "label": "Targets y salida",
+        "focus": ["platform-targets", "flutter-build", "debug-apk"],
+        "note": "Targets Flutter declarados y APK Android debug encontrado localmente."
+      }
+    ]
+  },
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "Cliente Flutter | app_movil",
+      "wraps": ["main-app", "login-screen", "environment-config", "api-service", "auth-service"],
+      "pad": 30
+    },
+    {
+      "kind": "region",
+      "label": "Servicios Docker Compose | red local",
+      "wraps": ["fastapi", "keycloak", "postgres", "mongo"],
+      "pad": 30
+    },
+    {
+      "kind": "region",
+      "label": "Targets y salida compilada",
+      "wraps": ["platform-targets", "flutter-build", "debug-apk"],
+      "pad": 24
+    }
+  ],
+  "components": [
+    {
+      "id": "main-app",
+      "type": "frontend",
+      "label": "Punto de entrada Flutter",
+      "sublabel": "main.dart | MaterialApp",
+      "tag": "home: LoginScreen",
+      "sources": [{ "path": "app_movil/lib/main.dart" }],
+      "pos": [60, 270],
+      "size": [180, 72]
+    },
+    {
+      "id": "login-screen",
+      "type": "frontend",
+      "label": "LoginScreen",
+      "sublabel": "presentation | login_screen.dart",
+      "tag": "UI + estado de sesion",
+      "sources": [{ "path": "app_movil/lib/presentation/login_screen.dart" }],
+      "pos": [300, 270],
+      "size": [180, 78]
+    },
+    {
+      "id": "environment-config",
+      "type": "backend",
+      "label": "EnvironmentConfig",
+      "sublabel": "core | String.fromEnvironment",
+      "tag": "JSON dev: inyeccion no verificada",
+      "sources": [
+        { "path": "app_movil/lib/core/environment_config.dart" },
+        { "path": "app_movil/environments/.env.dev.json" }
+      ],
+      "pos": [300, 440],
+      "size": [200, 78]
+    },
+    {
+      "id": "api-service",
+      "type": "backend",
+      "label": "ApiService",
+      "sublabel": "data | api_service.dart",
+      "tag": "GET /healthcheck",
+      "sources": [{ "path": "app_movil/lib/data/api_service.dart" }],
+      "pos": [540, 270],
+      "size": [180, 78]
+    },
+    {
+      "id": "auth-service",
+      "type": "security",
+      "label": "KeycloakService",
+      "sublabel": "data | keycloak_service.dart",
+      "tag": "OIDC redirect + token read",
+      "sources": [{ "path": "app_movil/lib/data/keycloak_service.dart" }],
+      "pos": [540, 90],
+      "size": [180, 78]
+    },
+    {
+      "id": "fastapi",
+      "type": "backend",
+      "label": "API FastAPI",
+      "sublabel": "Python 3.11-slim | :8000",
+      "tag": "Dockerfile build",
+      "sources": [
+        { "path": "main.py" },
+        { "path": "Dockerfile" }
+      ],
+      "pos": [850, 270],
+      "size": [180, 78]
+    },
+    {
+      "id": "keycloak",
+      "type": "security",
+      "label": "Keycloak 25.0",
+      "sublabel": "start-dev | :8080",
+      "tag": "OIDC provider",
+      "sources": [
+        { "path": "docker-compose.yml" },
+        { "path": "app_movil/lib/data/keycloak_service.dart" }
+      ],
+      "pos": [850, 90],
+      "size": [180, 78]
+    },
+    {
+      "id": "postgres",
+      "type": "database",
+      "label": "PostgreSQL 16",
+      "sublabel": "postgres_db | :5432",
+      "tag": "app_db",
+      "sources": [
+        { "path": "docker-compose.yml" },
+        { "path": "main.py" }
+      ],
+      "pos": [1100, 90],
+      "size": [180, 78]
+    },
+    {
+      "id": "mongo",
+      "type": "database",
+      "label": "MongoDB 7",
+      "sublabel": "mongo_db | :27017",
+      "tag": "admin ping",
+      "sources": [
+        { "path": "docker-compose.yml" },
+        { "path": "main.py" }
+      ],
+      "pos": [1100, 270],
+      "size": [180, 78]
+    },
+    {
+      "id": "platform-targets",
+      "type": "frontend",
+      "label": "Targets de plataforma",
+      "sublabel": "android | ios | linux | macos | web | windows",
+      "tag": "targets del proyecto Flutter",
+      "sources": [
+        { "path": "app_movil/pubspec.yaml" },
+        { "path": "app_movil/android/app/build.gradle.kts" }
+      ],
+      "pos": [60, 610],
+      "size": [400, 78]
+    },
+    {
+      "id": "flutter-build",
+      "type": "external",
+      "label": "build/",
+      "sublabel": "salida local de Flutter",
+      "tag": "directorio generado",
+      "pos": [555, 610],
+      "size": [180, 78]
+    },
+    {
+      "id": "debug-apk",
+      "type": "external",
+      "label": "app-debug.apk",
+      "sublabel": "build/app/outputs/flutter-apk/",
+      "tag": "Android debug | 77.2 MB local",
+      "pos": [845, 610],
+      "size": [420, 78]
+    }
+  ],
+  "connections": [
+    {
+      "id": "entry-login",
+      "from": "main-app",
+      "to": "login-screen",
+      "label": "home"
+    },
+    {
+      "id": "login-api-service",
+      "from": "login-screen",
+      "to": "api-service",
+      "label": "healthcheck"
+    },
+    {
+      "id": "login-auth-service",
+      "from": "login-screen",
+      "to": "auth-service",
+      "label": "OIDC login",
+      "variant": "security",
+      "fromSide": "top",
+      "toSide": "right",
+      "via": [[390, 225], [760, 225], [760, 129]]
+    },
+    {
+      "id": "api-service-fastapi",
+      "from": "api-service",
+      "to": "fastapi",
+      "label": "HTTP /healthcheck",
+      "variant": "emphasis"
+    },
+    {
+      "id": "auth-service-keycloak",
+      "from": "auth-service",
+      "to": "keycloak",
+      "label": "OIDC redirect | token",
+      "variant": "security",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "fastapi-postgres",
+      "from": "fastapi",
+      "to": "postgres",
+      "label": "SELECT 1",
+      "variant": "emphasis",
+      "fromSide": "top",
+      "toSide": "bottom"
+    },
+    {
+      "id": "fastapi-mongo",
+      "from": "fastapi",
+      "to": "mongo",
+      "label": "ping",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "keycloak-postgres",
+      "from": "keycloak",
+      "to": "postgres",
+      "label": "JDBC",
+      "fromSide": "right",
+      "toSide": "left"
+    },
+    {
+      "id": "targets-build",
+      "from": "platform-targets",
+      "to": "flutter-build",
+      "label": "compila",
+      "variant": "emphasis"
+    },
+    {
+      "id": "build-debug-apk",
+      "from": "flutter-build",
+      "to": "debug-apk",
+      "label": "Android debug"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Flujo de respuesta",
+      "items": [
+        "LoginScreen consulta GET /healthcheck mediante ApiService.",
+        "FastAPI devuelve el estado de PostgreSQL y MongoDB."
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "Identidad y limites",
+      "items": [
+        "Keycloak entrega access_token al cliente Flutter.",
+        "No se confirma validacion del token en FastAPI."
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "Persistencia",
+      "items": [
+        "PostgreSQL es compartido por FastAPI y Keycloak.",
+        "MongoDB se comprueba mediante admin ping."
+      ]
+    }
+  ]
+}

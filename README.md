@@ -20,6 +20,18 @@
   <a href="#tecnologias"><img src="https://img.shields.io/badge/Keycloak-4D4D4D?style=for-the-badge&logo=keycloak&logoColor=white" alt="Keycloak"></a>
 </p>
 
+## Diagrama de Arquitectura
+
+<p align="center">
+	<a href="https://jffa25.github.io/backend-entorno-dev/">
+		<img src="architecture/backend-frontend-dev.visual-check.1440x900.light.png" alt="Vista previa del diagrama de arquitectura Backend y Flutter" width="100%"/>
+	</a>
+</p>
+
+<p align="center">
+	<a href="https://jffa25.github.io/backend-entorno-dev/"><strong>Abrir el diagrama interactivo en GitHub Pages</strong></a>
+</p>
+
 ## Descripción General
 
 Este repositorio reúne una infraestructura backend administrada con Docker Compose y una aplicación Flutter para móvil y web. La API de FastAPI se conecta con PostgreSQL para datos relacionales y MongoDB para datos NoSQL; Keycloak proporciona gestión de identidad y autenticación. La aplicación Flutter consume la API y se integra con Keycloak mediante configuración por entorno.
