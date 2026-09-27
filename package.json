@@ -1,0 +1,29 @@
+{
+  "name": "backend-entorno-dev",
+  "version": "1.0.0",
+  "description": "Entorno backend contenerizado con Docker Compose: PostgreSQL, MongoDB, Keycloak y FastAPI/Express, con Swagger para documentación de la API.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JFFA25/backend-entorno-dev.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/JFFA25/backend-entorno-dev/issues"
+  },
+  "homepage": "https://github.com/JFFA25/backend-entorno-dev#readme",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^18.0.4",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.10.2",
+    "pg": "^8.23.0"
+  }
+}
