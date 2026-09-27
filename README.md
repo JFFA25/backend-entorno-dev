@@ -1,4 +1,4 @@
-# <p align="center">Backend &amp; Frontend Dev Environment</p>
+# Backend & Frontend Dev Environment
 
 <p align="center">
   <strong>Entorno de desarrollo integrado para una API FastAPI y una aplicación Flutter</strong><br>
@@ -6,7 +6,7 @@
 </p>
 
 <p align="center">
-  <img src="/flutter.png" alt="Flutter Logo" width="250"/>
+	<img src="flutter.png" alt="Flutter Logo" width="250"/>
 </p>
 
 <p align="center">
@@ -23,13 +23,13 @@
 ## Diagrama de Arquitectura
 
 <p align="center">
-	<a href="https://jffa25.github.io/backend-entorno-dev/">
+	<a href="https://jffa25.github.io/backend-entorno-dev/architecture/backend-frontend-dev.html">
 		<img src="architecture/backend-frontend-dev.visual-check.1440x900.light.png" alt="Vista previa del diagrama de arquitectura Backend y Flutter" width="100%"/>
 	</a>
 </p>
 
 <p align="center">
-	<a href="https://jffa25.github.io/backend-entorno-dev/"><strong>Abrir el diagrama interactivo en GitHub Pages</strong></a>
+	<a href="https://jffa25.github.io/backend-entorno-dev/architecture/backend-frontend-dev.html"><strong>Abrir el diagrama interactivo en GitHub Pages</strong></a>
 </p>
 
 ## Descripción General
