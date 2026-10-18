@@ -38,6 +38,7 @@ dependencies:
   flutter_secure_storage: ^11.2.0
   openid_client: ^0.4.10+2
   http: ^1.6.0
+  flutter_appauth: ^12.1.0
 
 dev_dependencies:
   flutter_test:

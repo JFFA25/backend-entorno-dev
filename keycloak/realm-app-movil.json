@@ -1,0 +1,38 @@
+{
+  "realm": "app-movil",
+  "enabled": true,
+  "sslRequired": "none",
+  "registrationAllowed": false,
+  "clients": [
+    {
+      "clientId": "flutter-app",
+      "name": "Flutter App",
+      "enabled": true,
+      "publicClient": true,
+      "protocol": "openid-connect",
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": true,
+      "directAccessGrantsEnabled": false,
+      "redirectUris": [
+        "http://localhost:8085/*",
+        "http://192.168.*",
+        "http://10.*",
+        "http://172.*",
+        "appmovil:/oauthredirect"
+      ],
+      "webOrigins": ["+"],
+      "attributes": { "pkce.code.challenge.method": "S256" }
+    }
+  ],
+  "users": [
+    {
+      "username": "demo",
+      "enabled": true,
+      "emailVerified": true,
+      "firstName": "Demo",
+      "lastName": "Usuario",
+      "email": "demo@example.com",
+      "credentials": [{ "type": "password", "value": "demo1234", "temporary": false }]
+    }
+  ]
+}

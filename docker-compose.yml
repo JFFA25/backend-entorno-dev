@@ -1,58 +1,100 @@
+name: backend-entorno-dev
+
 services:
   postgres:
-    image: postgres:16
-    container_name: postgres_db
-    restart: always
+    image: postgres:17-alpine
+    restart: unless-stopped
     environment:
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: admin123
-      POSTGRES_DB: app_db
-    ports:
-      - "5432:5432"
+      POSTGRES_USER: ${POSTGRES_USER:-stack_admin}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Configura POSTGRES_PASSWORD en .env}
+      POSTGRES_DB: ${POSTGRES_DB:-app_db}
+      KEYCLOAK_DB_PASSWORD: ${KEYCLOAK_DB_PASSWORD:?Configura KEYCLOAK_DB_PASSWORD en .env}
     volumes:
       - postgres_data:/var/lib/postgresql/data
+      - ./postgres/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U \"$$POSTGRES_USER\" -d \"$$POSTGRES_DB\""]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+    networks: [private]
 
   mongo:
     image: mongo:7
-    container_name: mongo_db
-    restart: always
+    restart: unless-stopped
     environment:
-      MONGO_INITDB_ROOT_USERNAME: admin
-      MONGO_INITDB_ROOT_PASSWORD: admin123
-    ports:
-      - "27017:27017"
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER:-stack_admin}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD:?Configura MONGO_PASSWORD en .env}
     volumes:
       - mongo_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping').ok"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+    networks: [private]
 
   keycloak:
-    image: quay.io/keycloak/keycloak:25.0
-    container_name: keycloak
-    command: start-dev
-    restart: always
+    image: quay.io/keycloak/keycloak:26.8.0
+    restart: unless-stopped
+    command: ["start-dev", "--import-realm"]
     environment:
-      KEYCLOAK_ADMIN: admin
-      KEYCLOAK_ADMIN_PASSWORD: admin123
       KC_DB: postgres
-      KC_DB_URL: jdbc:postgresql://postgres:5432/app_db
-      KC_DB_USERNAME: admin
-      KC_DB_PASSWORD: admin123
-    ports:
-      - "8080:8080"
+      KC_DB_URL: jdbc:postgresql://postgres:5432/keycloak
+      KC_DB_USERNAME: keycloak
+      KC_DB_PASSWORD: ${KEYCLOAK_DB_PASSWORD:?Configura KEYCLOAK_DB_PASSWORD en .env}
+      KC_BOOTSTRAP_ADMIN_USERNAME: ${KEYCLOAK_ADMIN:-admin}
+      KC_BOOTSTRAP_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD:?Configura KEYCLOAK_ADMIN_PASSWORD en .env}
+      KC_HTTP_RELATIVE_PATH: /auth
+      KC_HOSTNAME: ${PUBLIC_BASE_URL:-http://localhost:8085}/auth
+      KC_PROXY_HEADERS: xforwarded
+      KC_HTTP_ENABLED: "true"
+    volumes:
+      - ./keycloak/realm-app-movil.json:/opt/keycloak/data/import/realm-app-movil.json:ro
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
+    networks: [private]
 
   api:
-    build: .
-    container_name: fastapi_api
-    restart: always
-    ports:
-      - "8000:8000"
+    build: ./api
+    restart: unless-stopped
     environment:
-      DATABASE_URL: "postgresql+psycopg2://admin:admin123@postgres:5432/app_db"
-      MONGO_URL: "mongodb://admin:admin123@mongo:27017/"
+      DATABASE_URL: postgresql+psycopg2://${POSTGRES_USER:-stack_admin}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB:-app_db}
+      MONGO_URL: mongodb://${MONGO_USER:-stack_admin}:${MONGO_PASSWORD}@mongo:27017/?authSource=admin
     depends_on:
-      - postgres
-      - mongo
+      postgres:
+        condition: service_healthy
+      mongo:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/', timeout=4)"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    networks: [private]
+
+  # Único servicio publicado: sirve Flutter web y hace proxy a /api (FastAPI) y /auth (Keycloak)
+  flutter-web:
+    build:
+      context: .
+      dockerfile: web/Dockerfile
+      args:
+        PUBLIC_BASE_URL: ${PUBLIC_BASE_URL:-http://localhost:8085}
+    restart: unless-stopped
+    ports:
+      - "${WEB_PORT:-8085}:80"
+    volumes:
+      - ./dist:/usr/share/nginx/html/downloads:ro
+    depends_on:
+      api:
+        condition: service_healthy
+      keycloak:
+        condition: service_started
+    networks: [private]
+
+networks:
+  private:
 
 volumes:
   postgres_data:

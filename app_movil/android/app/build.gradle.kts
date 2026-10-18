@@ -27,6 +27,8 @@ android {
         // flag during build.
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+        // Esquema de redirección para el login con Keycloak (flutter_appauth)
+        manifestPlaceholders["appAuthRedirectScheme"] = "appmovil"
     }
 
     buildTypes {

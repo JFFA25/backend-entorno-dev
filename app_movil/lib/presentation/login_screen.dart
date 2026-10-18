@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../data/keycloak_service.dart';
-import '../data/api_service.dart'; // 1. Importamos tu nuevo servicio de API
+import '../data/api_service.dart';  // 1. Importamos tu nuevo servicio de API
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -58,12 +58,22 @@ class _LoginScreenState extends State<LoginScreen>
     super.dispose();
   }
 
-  void _handleLogin() {
+  Future<void> _handleLogin() async {
     setState(() {
       _loading = true;
-      _status = "Redirigiendo a Keycloak...";
+      _status = "Abriendo Keycloak...";
     });
-    _authService.login();
+    final token = await _authService.login();
+    if (!mounted) return;
+    setState(() {
+      _loading = false;
+      if (token != null) {
+        _status = "¡Autenticación Exitosa!";
+        _token = token;
+      } else {
+        _status = "Redirigiendo o sin sesión";
+      }
+    });
   }
 
   // 3. Función para mandar a consultar a tu contenedor de FastAPI

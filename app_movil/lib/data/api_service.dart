@@ -9,7 +9,7 @@ class ApiService {
   Future<Map<String, dynamic>> getDatabaseHealth() async {
     try {
       final response = await http.get(Uri.parse('$_baseUrl/healthcheck'));
-      
+
       if (response.statusCode == 200) {
         return json.decode(response.body);
       } else {

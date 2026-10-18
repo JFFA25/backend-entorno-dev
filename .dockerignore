@@ -1,0 +1,6 @@
+.git
+dist
+app_movil/build
+app_movil/.dart_tool
+app_movil/android/.gradle
+app_movil/android/build
